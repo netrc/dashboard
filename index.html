@@ -21,6 +21,9 @@ body {
 #mainTable {
   float: right;
 }
+tr.project {
+  cursor: zoom-in;
+}
 th {
     font-size: 24pt;
     color: #4c7ece;
@@ -41,12 +44,16 @@ th {
    <th colspan="2"> dashboard </th>
    </table>
  </div>
- <div class="column right">
+ <div class="column right" id="details">
  </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
 <script>
+  var G = {
+    "desc": { },     // place to store project descriptions
+    "detailsMD": { }     // project details markdown
+  };
 
   var icons = {
     'green': 'https://img.icons8.com/color/24/000000/ok.png',
@@ -64,9 +71,19 @@ th {
     e = document.getElementById("mainTable")  // TODO: if null
     alldocs.forEach((doc) => {
       console.log(doc.id);
-      let html = `<tr> <td> ${iconHTML(doc.data().status)} </td> <td> ${doc.id} </td> </tr>`;
+      G['desc'][doc.id] = doc.data().description; 
+      G['detailsMD'][doc.id] = doc.data().detailsMD; 
+      let html = `<tr class="project" onclick="showDetails('${doc.id}')"> <td> ${iconHTML(doc.data().status)} </td> <td> ${doc.id} </td> </tr>`;
       e.insertAdjacentHTML( 'beforeend', html )
     });
+  }
+  function showDetails(p) {
+    console.log(`showDetails ${p}`);
+    e = document.getElementById("details");  // TODO: if null
+    //let desc = ('desc' in G[p]) ? G[p]['desc'] : "";
+    let desc = G['desc'][p];
+    let detailsMD = G['detailsMD'][p];
+    e.innerHTML = `<br><br> details of <i> ${p} </i> <br> <br> ${desc} <br> <br> ${detailsMD}`;
   }
 
   var config = {
