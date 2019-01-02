@@ -4,9 +4,12 @@
 | ![](https://img.icons8.com/color/24/000000/close-window.png)	| vlcb	| brass rubbings |
 | ![](https://img.icons8.com/color/24/000000/close-window.png)	| blog	| my blog |
 | ![](https://img.icons8.com/color/24/000000/close-window.png)	| get going	| display todo list|
-| ![](https://png.icons8.com/color/in-progress.png/24)	| daily pages	| ...|
+| ![](https://png.icons8.com/color/24/000000/under-construction.png)	| daily pages	| ...|
 | ![](https://img.icons8.com/color/24/000000/error.png)	| armistice movie	| ...|
 | ![](https://img.icons8.com/color/24/000000/in-progress.png)	| genealogy	| ...|
+| ![](https://img.icons8.com/color/24/000000/error.png)	| house manager	| ...|
+| ![](https://img.icons8.com/color/24/000000/close-window.png)	| google album list	| ...|
+| ![](https://img.icons8.com/color/24/000000/ok.png) | curiousN | simple npm math module |
 | ![](https://img.icons8.com/color/24/000000/ok.png) | upurl | chrome extension |
 
 <br><br>
