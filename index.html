@@ -7,19 +7,42 @@
 body {
     font-family: Arial, sans-serif;
 }
+.column {
+  float: left;
+  width: 50%;
+}
+.left {
+  width: 34%;
+}
+.right {
+  width: 66%;
+}
+
+#mainTable {
+  float: right;
+}
 th {
     font-size: 24pt;
     color: #4c7ece;
 }
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 </style>
 
 <body>
-<div id="main">
- <center>
- <table id="mainTable">
- <th colspan="2"> dashboard </th>
- </table>
- </center>
+<div id="row">
+ <div class="column left">
+   <table id="mainTable">
+   <th colspan="2"> dashboard </th>
+   </table>
+ </div>
+ <div class="column right">
+ </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
