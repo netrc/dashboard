@@ -1,6 +1,8 @@
-<html>
+<!DOCTYPE html>
+<html lang="en-US">
 <head>
-<title> test fb </title>
+<title> dashboard </title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
     font-family: Arial, sans-serif;
@@ -32,7 +34,7 @@ th {
     'sleeping': 'https://img.icons8.com/color/24/000000/sleeping.png'
   };
   function iconHTML( s ) {
-    return `<img src="${icons[s]}">`;
+    return `<img src="${icons[s]}" alt="${s}">`;
   }
 
   function mainTable (alldocs) {
