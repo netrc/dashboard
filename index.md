@@ -1,7 +1,7 @@
 
 | Status | Project | Desc	|
 |--------|:-------:|------|
-| :stop_sign:	| vlcb	| brass rubbings|
+| !(https://img.icons8.com/color/48/000000/close-window.png)	| vlcb	| brass rubbings|
 | :stop_sign:	| get going	| display todo list|
 | :stop_sign:	| daily pages	| ...|
 | :stop_sign:	| armistice movie	| ...|
