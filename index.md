@@ -6,6 +6,7 @@
 | :stop_sign:	| daily pages	| ...|
 | :stop_sign:	| armistice movie	| ...|
 | :stop_sign:	| genealogy	| ...|
+| :green_check: | upurl | chrome extension |
 
 <br><br>
 
@@ -49,3 +50,6 @@
 
 ## curiousN
 * done
+
+## upurl
+* done; published in [chrome extension store](https://chrome.google.com/webstore/detail/up-url/cagmkfldeglkpnoehchbbdjmgddacodk?hl=en) - 
