@@ -4,7 +4,7 @@
 | ![](https://img.icons8.com/color/48/000000/close-window.png/24)	| vlcb	| brass rubbings |
 | ![](https://img.icons8.com/color/48/000000/close-window.png/24)	| blog	| my blog |
 | ![](https://img.icons8.com/color/48/000000/close-window.png/24)	| get going	| display todo list|
-| ![](https://img.icons8.com/color/48/000000/in-progress.png)	| daily pages	| ...|
+| ![](https://png.icons8.com/color/in-progress.png/24)	| daily pages	| ...|
 | ![](https://img.icons8.com/color/48/000000/error.png)	| armistice movie	| ...|
 | ![](https://img.icons8.com/color/48/000000/in-progress.png)	| genealogy	| ...|
 | ![](https://img.icons8.com/color/48/000000/ok.png) | upurl | chrome extension |
