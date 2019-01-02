@@ -1,0 +1,64 @@
+<html>
+<head>
+<title> test fb </title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+}
+</style>
+
+<body>
+<h1> Projects </h1>
+<div id="main">
+ <center>
+ <table id="mainTable">
+ </table>
+ </center>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+<script>
+
+  var icons = {
+    'green': 'https://img.icons8.com/color/24/000000/ok.png',
+    'yellow': 'https://img.icons8.com/color/24/000000/error.png',
+    'red': 'https://img.icons8.com/color/24/000000/close-window.png',
+    'todo': 'https://png.icons8.com/color/24/000000/under-construction.png',
+    'working': 'https://img.icons8.com/color/24/000000/in-progress.png',
+    'sleeping': 'https://img.icons8.com/color/24/000000/sleeping.png'
+  };
+  function iconHTML( s ) {
+    return `<img src="${icons[s]}">`;
+  }
+
+  function mainTable (alldocs) {
+    e = document.getElementById("mainTable")  // TODO: if null
+    alldocs.forEach((doc) => {
+      console.log(doc.id);
+      let html = `<tr> <td> ${iconHTML(doc.data().status)} </td> <td> ${doc.id} </td> </tr>`;
+      e.insertAdjacentHTML( 'beforeend', html )
+    });
+  }
+
+  var config = {
+    apiKey: "AIzaSyCGlXExjEJPYbPAbTrrS4EeNoSwryTL2Hc",
+    authDomain: "netrcdashboard.firebaseapp.com",
+    databaseURL: "https://netrcdashboard.firebaseio.com",
+    projectId: "netrcdashboard",
+    storageBucket: "netrcdashboard.appspot.com",
+    messagingSenderId: "594095535210"
+  };
+  firebase.initializeApp(config);
+
+  var fs = firebase.firestore();
+  console.log("projects get");
+  fs.collection('projects').get()
+    .then( mainTable )
+    .catch((err) => {
+      console.log('Error getting documents', err);
+    });
+</script>
+
+</body>
+
+</html>
