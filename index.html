@@ -58,14 +58,13 @@ th {
  </div>
 </div>
 
-<br>
-
-<h5> 
-Thu Jan  3 13:14:34 CST 2019
-</h5>
+<div class="userstatus" id="userstatus"> public read-only </div>
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
 <br>
 <button onclick="writeData()"> write data </button>
+<h5> 
+Thu Jan  3 13:14:34 CST 2019
+</h5>
 
 <script>
   var G = {
@@ -151,6 +150,10 @@ Thu Jan  3 13:14:34 CST 2019
         var credential = error.credential;
         // ...
       });
+
+    // get roles; hide signin; show signout; 
+    document.getElementById("userstatus").innerText = "signed in";
+    console.log(`credential: ${credential}`);
     } else {
       console.log('User already signed-in Firebase.');
     }
