@@ -130,10 +130,17 @@ Thu Jan  3 13:14:34 CST 2019
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 
+
   // https://firebase.google.com/docs/auth/web/google-signin
   // We need to register an Observer on Firebase Auth to make sure auth is initialized.
   var unsubscribe = firebase.auth().onAuthStateChanged(function(firebaseUser) {
     unsubscribe();
+
+    // my code here: get roles; hide signin; show signout; 
+    document.getElementById("userstatus").innerText = "signed in";
+    console.log(`f u uid: ${firebaseUser.uid}`);
+    ///////
+
     // Check if we are already signed-in Firebase with the correct user.
     if (!isUserEqual(googleUser, firebaseUser)) {
       // Build Firebase credential with the Google ID token.
@@ -151,13 +158,8 @@ Thu Jan  3 13:14:34 CST 2019
         // ...
       });
 
-    // get roles; hide signin; show signout; 
-    document.getElementById("userstatus").innerText = "signed in";
-    console.log(`credential: ${credential}`);
     } else {
       console.log('User already signed-in Firebase.');
-        document.getElementById("userstatus").innerText = "signed in";
-        console.log(`credential 2: ${credential}`);
     }
   });
 
