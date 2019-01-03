@@ -137,8 +137,23 @@ Thu Jan  3 13:14:34 CST 2019
     unsubscribe();
 
     // my code here: get roles; hide signin; show signout; 
-    document.getElementById("userstatus").innerText = "signed in";
     console.log(`f u uid: ${firebaseUser.uid}`);
+    db.collection("userInfo").doc(firebaseUser.uid).get().then(function(doc) {
+        if (doc.exists) { // doc shouldn't exist for other users
+            console.log("Document data:", doc.data());
+            // already says 'public read-only'; update only for admin
+            if ("roles" in doc.data()) {
+                if ("admin" in doc.data()["roles"]) {
+                    document.getElementById("userstatus").innerText = "admin r/w";
+                }
+            }
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("userinfo - No such document!");
+        }
+    }).catch(function(error) {
+        console.log("Error getting userinfo document:", error);
+    });
     ///////
 
     // Check if we are already signed-in Firebase with the correct user.
