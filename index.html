@@ -104,11 +104,12 @@ th {
   }
 
   function mainTable (alldocs) {
-     app.vdocs = [ {
-        "id": doc.id, 
-        "status": doc.data().status,
-        "description": doc.data().description,
-        } for doc in alldocs ];
+     app.vdocs = alldocs.map( d => { return {
+        "id": d.id, 
+        "status": d.data().status,
+        "description": d.data().description,
+        }
+     });
 
     e = document.getElementById("mainTable")  // TODO: if null
     alldocs.forEach((doc) => {
