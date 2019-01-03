@@ -58,6 +58,8 @@ th {
 Thu, Jan 03, 2019  1:46:54 PM
 </h5>
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
+<br>
+<button onclick="writeData"> write data </button>
 
 <script>
   var G = {
@@ -162,6 +164,23 @@ Thu, Jan 03, 2019  1:46:54 PM
      return false;
   }
   ////////////////////////////////////////////////
+
+functoin writeData() {
+    console.log("write data");
+    updateDoc = { "status": "yellow", "date": Date().toString() };
+  //fs.collection('projects').get()
+    //.then( mainTable )
+    //.catch((err) => {
+      //console.log('Error getting documents', err);
+    //});
+    fs.collection("projects").doc("testP").set(updateDoc)
+        .then(function() {
+            console.log("Document successfully written!");
+        })
+        .catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
+}
 
 </script>
 
