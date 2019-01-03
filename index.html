@@ -114,12 +114,12 @@ th {
         "status": doc.data().status,
         "statusHTML": `<img src="${icons[ doc.data().status ]}" alt="${ doc.data().status }">`,
         "description": doc.data().description,
-        } );
+        };
       app.vdocs2[ doc.id ] = {
         status: doc.data().status,
         statusHTML: `<img src="${icons[ doc.data().status ]}" alt="${ doc.data().status }">`,
         description: doc.data().description,
-        };
+        } );
       console.log(doc.id);
       G['desc'][doc.id] = doc.data().description; 
       G['detailsMD'][doc.id] = doc.data().detailsMD; 
