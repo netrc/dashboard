@@ -55,6 +55,13 @@ th {
    <table id="mainTable">
    <th colspan="2"> dashboard </th>
    </table>
+    <hr>
+    t2
+    <table>
+        <tr v-for="d in vdocs">
+          <td> {{ d.status }} </td> <td> {{ d.id }} </td>
+        </tr>
+    </table>
  </div>
  <div class="column right" id="details">
  </div>
@@ -73,6 +80,7 @@ th {
     var app = new Vue( {
         el: "#app",
         data: {
+            vdocs = [],
             versionMessage: " Thu Jan  3 14:22:42 CST 2019",
             userstatus: "public read-only"
         }
@@ -99,6 +107,7 @@ th {
     e = document.getElementById("mainTable")  // TODO: if null
     alldocs.forEach((doc) => {
       console.log(doc.id);
+      app.vdocs.push( {"id":doc.id, "status":doc.data().status} );
       G['desc'][doc.id] = doc.data().description; 
       G['detailsMD'][doc.id] = doc.data().detailsMD; 
       let html = `<tr class="project" onclick="showDetails('${doc.id}')"> <td> ${iconHTML(doc.data().status)} </td> <td> ${doc.id} </td> </tr>`;
