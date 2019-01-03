@@ -104,7 +104,7 @@ th {
   }
 
   function mainTable (alldocs) {
-     app.vdocs = alldocs.map( d => { return {
+     app.vdocs = alldocs.docs().map( d => { return {
         "id": d.id, 
         "status": d.data().status,
         "description": d.data().description,
@@ -113,6 +113,11 @@ th {
 
     e = document.getElementById("mainTable")  // TODO: if null
     alldocs.forEach((doc) => {
+      app.vdocs.push( {
+        "id": doc.id, 
+        "status": doc.data().status,
+        "description": doc.data().description,
+        } );
       console.log(doc.id);
       G['desc'][doc.id] = doc.data().description; 
       G['detailsMD'][doc.id] = doc.data().detailsMD; 
