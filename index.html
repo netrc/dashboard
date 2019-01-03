@@ -156,6 +156,8 @@ Thu Jan  3 13:14:34 CST 2019
     console.log(`credential: ${credential}`);
     } else {
       console.log('User already signed-in Firebase.');
+        document.getElementById("userstatus").innerText = "signed in";
+        console.log(`credential 2: ${credential}`);
     }
   });
 
