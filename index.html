@@ -13,9 +13,13 @@
 body {
     font-family: Arial, sans-serif;
 }
+.row {
+  display: table-row;
+}
 .column {
   float: left;
   width: 50%;
+  display: table-cell;
 }
 .left {
   width: 34%;
@@ -44,7 +48,7 @@ th {
 </style>
 
 <body>
-<div id="row">
+<div class="row">
  <div class="column left">
    <table id="mainTable">
    <th colspan="2"> dashboard </th>
@@ -53,7 +57,9 @@ th {
  <div class="column right" id="details">
  </div>
 </div>
+
 <br>
+
 <h5> 
 Thu Jan  3 13:14:34 CST 2019
 </h5>
