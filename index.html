@@ -58,7 +58,7 @@ th {
     <hr>
     t2
     <table>
-        <tr v-for="(v, k) in vdocs2" class="project">
+        <tr v-for="(v, k) in vdocs" class="project">
           <td> <span v-html="v.statusHTML"></span> </td> <td> {{ k }} </td>
         </tr>
     </table>
@@ -81,8 +81,7 @@ th {
     var app = new Vue( {
         el: "#app",
         data: {
-            vdocs: [],
-            vdocs2: {},
+            vdocs: {},
             alldetails: "none",
             versionMessage: " Thu Jan  3 14:22:42 CST 2019",
             userstatus: "public read-only"
@@ -108,24 +107,20 @@ th {
 
   function mainTable (alldocs) {
     e = document.getElementById("mainTable")  // TODO: if null
+    v2 = {}
     alldocs.forEach((doc) => {
-      app.vdocs.push( {
-        "id": doc.id, 
-        "status": doc.data().status,
-        "statusHTML": `<img src="${icons[ doc.data().status ]}" alt="${ doc.data().status }">`,
-        "description": doc.data().description,
-        };
-      app.vdocs2[ doc.id ] = {
+      v2[ doc.id ] = {
         status: doc.data().status,
         statusHTML: `<img src="${icons[ doc.data().status ]}" alt="${ doc.data().status }">`,
         description: doc.data().description,
-        } );
+        } ;
       console.log(doc.id);
       G['desc'][doc.id] = doc.data().description; 
       G['detailsMD'][doc.id] = doc.data().detailsMD; 
       let html = `<tr class="project" onclick="showDetails('${doc.id}')"> <td> ${iconHTML(doc.data().status)} </td> <td> ${doc.id} </td> </tr>`;
       e.insertAdjacentHTML( 'beforeend', html )
     });
+    app.vdocs = v2;  // vue can't see adding properties individually; this sets all at once
   }
   function showDetails(p) {
     console.log(`showDetails ${p}`);
