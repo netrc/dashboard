@@ -3,6 +3,7 @@
 <head>
 <title> dashboard </title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="594095535210-c0svg0rb0ulj6l477jr07f2saj24q98v.apps.googleusercontent.com">
@@ -48,6 +49,7 @@ th {
 </style>
 
 <body>
+<div id="app">
 <div class="row">
  <div class="column left">
    <table id="mainTable">
@@ -63,10 +65,18 @@ th {
 <br>
 <button onclick="writeData()"> write data </button>
 <h5> 
-Thu Jan  3 13:14:34 CST 2019
+{{ versionMessage }}
 </h5>
+</div>
 
 <script>
+    var app = new Vue( {
+        el: "#app",
+        data: {
+            versionMessage: " Thu Jan  3 14:22:42 CST 2019"
+        }
+    });
+
   var G = {
     "desc": { },     // place to store project descriptions
     "detailsMD": { }     // project details markdown
