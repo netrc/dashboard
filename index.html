@@ -58,12 +58,13 @@ th {
     <hr>
     t2
     <table>
-        <tr v-for="d in vdocs">
+        <tr v-for="d in vdocs" class="project">
           <td> <span v-html="d.statusHTML"></span> </td> <td> {{ d.id }} </td>
         </tr>
     </table>
  </div>
  <div class="column right" id="details">
+  {{ alldetails }}
  </div>
 </div>
 
@@ -81,6 +82,7 @@ th {
         el: "#app",
         data: {
             vdocs: [],
+            alldetails: "none",
             versionMessage: " Thu Jan  3 14:22:42 CST 2019",
             userstatus: "public read-only"
         }
