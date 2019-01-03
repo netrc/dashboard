@@ -57,3 +57,23 @@
 
 ## upurl
 * done; published in [chrome extension store](https://chrome.google.com/webstore/detail/up-url/cagmkfldeglkpnoehchbbdjmgddacodk?hl=en) - 
+
+
+
+## dashboard
+
+### google auth
+* https://developers.google.com/identity/sign-in/web/sign-in
+* https://firebase.google.com/docs/auth/web/google-signin
+
+### firebase auth 
+* a little over done - https://fir-ui-demo-84a6c.firebaseapp.com/?_sm_au_=iVVWpMSqHJFSZRsr
+* https://firebase.google.com/docs/auth/web/firebaseui
+
+### firestore
+* role based permissions
+* added userInfo/UID/{ roles: { admin: true } }
+* and function in rules
+* see https://angularfirebase.com/lessons/role-based-authorization-with-firestore-nosql-and-angular-5/#User-and-Roles-Interfaces
+* (also, but not as helpful https://www.reddit.com/r/Firebase/comments/85riml/user_role_authentication_with_firebase_auth_or/)
+
