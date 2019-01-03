@@ -60,7 +60,7 @@ th {
  </div>
 </div>
 
-<div class="userstatus" id="userstatus"> public read-only </div>
+<div class="userstatus"> {{ userstatus }} </div>
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
 <br>
 <button onclick="writeData()"> write data </button>
@@ -73,7 +73,8 @@ th {
     var app = new Vue( {
         el: "#app",
         data: {
-            versionMessage: " Thu Jan  3 14:22:42 CST 2019"
+            versionMessage: " Thu Jan  3 14:22:42 CST 2019",
+            userstatus: "public read-only"
         }
     });
 
@@ -154,7 +155,7 @@ th {
             // already says 'public read-only'; update only for admin
             if ("roles" in doc.data()) {
                 if ("admin" in doc.data()["roles"]) {
-                    document.getElementById("userstatus").innerText = "admin r/w";
+                    app.userstatus = "admin r/w"
                 }
             }
         } else {
