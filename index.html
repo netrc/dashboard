@@ -59,7 +59,7 @@ th {
     t2
     <table>
         <tr v-for="d in vdocs">
-          <td> {{ d.status }} </td> <td> {{ d.id }} </td>
+          <td> {{ iconHTML(d.status) }} </td> <td> {{ d.id }} </td>
         </tr>
     </table>
  </div>
@@ -104,10 +104,15 @@ th {
   }
 
   function mainTable (alldocs) {
+     app.vdocs = [ {
+        "id": doc.id, 
+        "status": doc.data().status,
+        "description": doc.data().description,
+        } for doc in alldocs ];
+
     e = document.getElementById("mainTable")  // TODO: if null
     alldocs.forEach((doc) => {
       console.log(doc.id);
-      app.vdocs.push( {"id":doc.id, "status":doc.data().status} );
       G['desc'][doc.id] = doc.data().description; 
       G['detailsMD'][doc.id] = doc.data().detailsMD; 
       let html = `<tr class="project" onclick="showDetails('${doc.id}')"> <td> ${iconHTML(doc.data().status)} </td> <td> ${doc.id} </td> </tr>`;
