@@ -58,8 +58,8 @@ th {
     <hr>
     t2
     <table>
-        <tr v-for="d in vdocs" class="project">
-          <td> <span v-html="d.statusHTML"></span> </td> <td> {{ d.id }} </td>
+        <tr v-for="(v, k) in vdocs2" class="project">
+          <td> <span v-html="v.statusHTML"></span> </td> <td> {{ k }} </td>
         </tr>
     </table>
  </div>
@@ -82,6 +82,7 @@ th {
         el: "#app",
         data: {
             vdocs: [],
+            vdocs2: {},
             alldetails: "none",
             versionMessage: " Thu Jan  3 14:22:42 CST 2019",
             userstatus: "public read-only"
@@ -114,6 +115,11 @@ th {
         "statusHTML": `<img src="${icons[ doc.data().status ]}" alt="${ doc.data().status }">`,
         "description": doc.data().description,
         } );
+      app.vdocs2[ doc.id ] = {
+        status: doc.data().status,
+        statusHTML: `<img src="${icons[ doc.data().status ]}" alt="${ doc.data().status }">`,
+        description: doc.data().description,
+        };
       console.log(doc.id);
       G['desc'][doc.id] = doc.data().description; 
       G['detailsMD'][doc.id] = doc.data().detailsMD; 
