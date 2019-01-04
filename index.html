@@ -6,6 +6,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="gvnVersion.js"></script>
 <meta name="google-signin-client_id" content="594095535210-c0svg0rb0ulj6l477jr07f2saj24q98v.apps.googleusercontent.com">
 <meta name="google-signin-cookiepolicy" content="single_host_origin">
 <meta name="google-signin-scope" content="profile email">
@@ -56,7 +57,7 @@ th {
    <th colspan="2"> dashboard </th>
    </table>
     <hr>
-    t2
+    t2 : {{gvnversion}}
     <table>
         <tr v-for="(v, k) in vdocs" class="project">
           <td> <span v-html="v.statusHTML"></span> </td> <td> {{ k }} </td>
@@ -84,7 +85,8 @@ th {
             vdocs: {},
             alldetails: "none",
             versionMessage: " Thu Jan  3 14:22:42 CST 2019",
-            userstatus: "public read-only"
+            userstatus: "public read-only",
+            gvnversion: gvn_version_str       // n.b. script is *not* async defer; use script onload?
         }
     });
 
@@ -112,7 +114,7 @@ th {
       v2[ doc.id ] = {
         status: doc.data().status,
         statusHTML: `<img src="${icons[ doc.data().status ]}" alt="${ doc.data().status }">`,
-        description: doc.data().description,
+        description: doc.data().description
         } ;
       console.log(doc.id);
       G['desc'][doc.id] = doc.data().description; 
