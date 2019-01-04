@@ -59,7 +59,7 @@ th {
     <hr>
     t2 : {{gvnversion}}
     <table>
-        <tr v-for="(v, k) in vdocs" class="project">
+        <tr v-for="(v, k) in vdocs" v-on:click="showDetails(k)" class="project">
           <td> <span v-html="v.statusHTML"></span> </td> <td> {{ k }} </td>
         </tr>
     </table>
