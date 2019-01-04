@@ -16,22 +16,27 @@ body {
     font-family: Arial, sans-serif;
 }
 .row {
-  display: table-row;
+  /*display: table-row;*/
+  display: grid    /* from https://css-tricks.com/left-and-right/  Grid example */
 }
 .column {
-  float: left;
-  width: 50%;
-  display: table-cell;
+  /*display: table-cell;*/
 }
 .left {
   width: 34%;
+  grid-column: 1;
 }
 .right {
   width: 66%;
+  grid-column: 2;
 }
-
-#mainTable {
+.mainTable {
   float: right;
+}
+.details {
+  position: relative;
+  top: 8%;
+  text-align: left
 }
 tr.project {
   cursor: zoom-in;
@@ -53,28 +58,25 @@ th {
 <div id="app">
 <div class="row">
  <div class="column left">
-   <table id="mainTable">
-   <th colspan="2"> dashboard </th>
-   </table>
-    <hr>
-    t2 : {{gvnversion}}
-    <table>
-        <tr v-for="(v, k) in vdocs" v-on:click="showDetails(k)" class="project">
-          <td> <span v-html="v.statusHTML"></span> </td> <td> {{ k }} </td>
-        </tr>
+   <table class="mainTable">
+     <th colspan="2"> dashboard </th>
+     <tr v-for="(v, k) in vdocs" v-on:click="showDetails(k)" class="project">
+       <td> <span v-html="v.statusHTML"></span> </td> <td> {{ k }} </td>
+     </tr>
     </table>
  </div>
  <div class="column right" id="details">
-  {{ alldetails }}
+   <span class="details" v-html="alldetails"></span>
  </div>
 </div>
+<hr>
 
 <div class="userstatus"> {{ userstatus }} </div>
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
 <br>
 <button onclick="writeData()"> write data </button>
 <h5> 
-{{ versionMessage }}
+{{gvn_version_str}} @ {{gvn_date}}
 </h5>
 </div>
 
@@ -84,9 +86,9 @@ th {
         data: {
             vdocs: {},
             alldetails: "none",
-            versionMessage: " Thu Jan  3 14:22:42 CST 2019",
             userstatus: "public read-only",
-            gvnversion: gvn_version_str       // n.b. script is *not* async defer; use script onload?
+            gvn_version_str: gvn_version_str,       // n.b. script is *not* async defer; use script onload?
+            gvn_date: gvn_date
         }
     });
 
@@ -103,12 +105,8 @@ th {
     'working':  'assets/in-progress.png',
     'sleeping': 'assets/sleeping.png'
   };
-  function iconHTML( s ) {
-    return `<img src="${icons[s]}" alt="${s}">`;
-  }
 
   function mainTable (alldocs) {
-    e = document.getElementById("mainTable")  // TODO: if null
     v2 = {}
     alldocs.forEach((doc) => {
       v2[ doc.id ] = {
@@ -119,18 +117,15 @@ th {
       console.log(doc.id);
       G['desc'][doc.id] = doc.data().description; 
       G['detailsMD'][doc.id] = doc.data().detailsMD; 
-      let html = `<tr class="project" onclick="showDetails('${doc.id}')"> <td> ${iconHTML(doc.data().status)} </td> <td> ${doc.id} </td> </tr>`;
-      e.insertAdjacentHTML( 'beforeend', html )
     });
     app.vdocs = v2;  // vue can't see adding properties individually; this sets all at once
   }
   function showDetails(p) {
     console.log(`showDetails ${p}`);
-    e = document.getElementById("details");  // TODO: if null
     //let desc = ('desc' in G[p]) ? G[p]['desc'] : "";
     let desc = G['desc'][p];
     let detailsMD = G['detailsMD'][p];
-    e.innerHTML = `<br><br> details of <i> ${p} </i> <br> <br> ${desc} <br> <br> ${detailsMD}`;
+    app.alldetails = `<br><br> details of <i> ${p} </i> <br> <br> ${desc} <br> <br> ${detailsMD}`;
   }
 
   var config = {
@@ -226,11 +221,6 @@ th {
 function writeData() {
     console.log("write data");
     updateDoc = { "status": "yellow", "date": Date().toString() };
-  //fs.collection('projects').get()
-    //.then( mainTable )
-    //.catch((err) => {
-      //console.log('Error getting documents', err);
-    //});
     fs.collection("projects").doc("testP").set(updateDoc)
         .then(function() {
             console.log("Document successfully written!");
