@@ -77,3 +77,4 @@
 * see https://angularfirebase.com/lessons/role-based-authorization-with-firestore-nosql-and-angular-5/#User-and-Roles-Interfaces
 * (also, but not as helpful https://www.reddit.com/r/Firebase/comments/85riml/user_role_authentication_with_firebase_auth_or/)
 
+
