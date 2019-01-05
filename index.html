@@ -13,7 +13,10 @@
 
 <style>
 body {
-    font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif;
+  background-color: #DCD9D4; 
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%), radial-gradient(at 50% 0%, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.50) 50%); 
+  background-blend-mode: soft-light,screen;
 }
 .row {
   /*display: table-row;*/
@@ -45,6 +48,14 @@ th {
     font-size: 24pt;
     color: #4c7ece;
 }
+.title {
+    font-size: 24pt;
+    font-weight: bold;
+    color: #4c7ece;
+}
+.userstatus {
+  font-style: italic
+}
 
 /* Clear floats after the columns */
 .row:after {
@@ -56,10 +67,11 @@ th {
 
 <body>
 <div id="app">
+<span class="title"> my dashboard </span>  <span class="userstatus"> {{ userstatus }} </span>
+<hr>
 <div class="row">
  <div class="column left">
    <table class="mainTable">
-     <th colspan="2"> dashboard </th>
      <tr v-for="(v, k) in vdocs" v-on:click="showDetails(k)" class="project">
        <td> <span v-html="v.statusHTML"></span> </td> <td> {{ k }} </td>
      </tr>
@@ -71,7 +83,6 @@ th {
 </div>
 <hr>
 
-<div class="userstatus"> {{ userstatus }} </div>
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
 <br>
 <button onclick="writeData()"> write data </button>
