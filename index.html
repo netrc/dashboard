@@ -81,29 +81,19 @@ th {
 </div>
 
 <script>
-    var app = new Vue( {
-        el: "#app",
-        data: {
-            vdocs: {},
-            alldetails: "none",
-            userstatus: "public read-only",
-            gvn_version_str: gvn_version_str,       // n.b. script is *not* async defer; use script onload?
-            gvn_date: gvn_date
-        }
-    });
 
   var G = {
-    "desc": { },     // place to store project descriptions
-    "detailsMD": { }     // project details markdown
+    desc: { },     // place to store project descriptions
+    detailsMD: { }     // project details markdown
   };
 
   var icons = {
-    'green':    'assets/ok.png',
-    'yellow':   'assets/error.png',
-    'red':      'assets/close-window.png',
-    'todo':     'assets/under-construction.png',
-    'working':  'assets/in-progress.png',
-    'sleeping': 'assets/sleeping.png'
+    green:    'assets/ok.png',
+    yellow:   'assets/error.png',
+    red:      'assets/close-window.png',
+    todo:     'assets/under-construction.png',
+    working:  'assets/in-progress.png',
+    sleeping: 'assets/sleeping.png'
   };
 
   function mainTable (alldocs) {
@@ -120,6 +110,7 @@ th {
     });
     app.vdocs = v2;  // vue can't see adding properties individually; this sets all at once
   }
+
   function showDetails(p) {
     console.log(`showDetails ${p}`);
     //let desc = ('desc' in G[p]) ? G[p]['desc'] : "";
@@ -128,6 +119,34 @@ th {
     app.alldetails = `<br><br> details of <i> ${p} </i> <br> <br> ${desc} <br> <br> ${detailsMD}`;
   }
 
+  function writeData() {
+    console.log("write data");
+    updateDoc = { "status": "yellow", "date": Date().toString() };
+    fs.collection("projects").doc("testP").set(updateDoc)
+        .then(function() {
+            console.log("Document successfully written!");
+        })
+        .catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
+  }
+
+  //////////////////
+  // main
+
+  // init Vue
+  var app = new Vue( {
+    el: "#app",
+    data: {
+      vdocs: {},
+      alldetails: "none",
+      userstatus: "public read-only",
+      gvn_version_str: gvn_version_str,       // n.b. script is *not* async defer; use script onload?
+      gvn_date: gvn_date
+    }
+  });
+  
+  // init Firebase
   var config = {
     apiKey: "AIzaSyCGlXExjEJPYbPAbTrrS4EeNoSwryTL2Hc",
     authDomain: "netrcdashboard.firebaseapp.com",
@@ -137,8 +156,8 @@ th {
     messagingSenderId: "594095535210"
   };
   firebase.initializeApp(config);
-
   var fs = firebase.firestore();
+
   console.log("projects get");
   fs.collection('projects').get()
     .then( mainTable )
@@ -147,7 +166,8 @@ th {
     });
 
   ////////////////////////////////////////////////
-  // https://developers.google.com/identity/sign-in/web/sign-in
+  // auth/signing e.g. https://developers.google.com/identity/sign-in/web/sign-in
+  //
   function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -217,18 +237,6 @@ th {
      return false;
   }
   ////////////////////////////////////////////////
-
-function writeData() {
-    console.log("write data");
-    updateDoc = { "status": "yellow", "date": Date().toString() };
-    fs.collection("projects").doc("testP").set(updateDoc)
-        .then(function() {
-            console.log("Document successfully written!");
-        })
-        .catch(function(error) {
-            console.error("Error writing document: ", error);
-        });
-}
 
 </script>
 

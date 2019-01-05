@@ -1,1 +1,1 @@
-var gvn_version_str = "v0.0.2";  var gvn_date = "2019-01-04T18:52:59-05:00"
+var gvn_version_str = "v0.0.3";  var gvn_date = "2019-01-05T12:13:52-05:00"
