@@ -7,7 +7,9 @@
 <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src="gvnVersion.js"></script>
-<meta name="google-signin-client_id" content="594095535210-c0svg0rb0ulj6l477jr07f2saj24q98v.apps.googleusercontent.com">
+<meta name="prev-gxogle-signin-client_id" content="594095535210-c0svg0rb0ulj6l477jr07f2saj24q98v.apps.googleusercontent.com">
+<meta name="prevgoogle-signin-client_id" content="594095535210-c3upvf334cm8ttj9jiejomihlngpaa1k.apps.googleusercontent.com">
+<meta name="google-signin-client_id" content="594095535210-c3upvf334cm8ttj9jiejomihlngpaa1k.apps.googleusercontent.com">
 <meta name="google-signin-cookiepolicy" content="single_host_origin">
 <meta name="google-signin-scope" content="profile email">
 
@@ -190,9 +192,10 @@ th {
   // https://firebase.google.com/docs/auth/web/google-signin
   // We need to register an Observer on Firebase Auth to make sure auth is initialized.
   var unsubscribe = firebase.auth().onAuthStateChanged(function(firebaseUser) {
-    unsubscribe();
+    //unsubscribe();
 
     // my code here: get roles; hide signin; show signout; 
+if (firebaseUser) {
     console.log(`f u uid: ${firebaseUser.uid}`);
     fs.collection("userInfo").doc(firebaseUser.uid).get().then(function(doc) {
         if (doc.exists) { // doc shouldn't exist for other users
@@ -210,6 +213,9 @@ th {
     }).catch(function(error) {
         console.log("Error getting userinfo document:", error);
     });
+} else {
+console.log("no good");
+}
     ///////
 
     // Check if we are already signed-in Firebase with the correct user.
