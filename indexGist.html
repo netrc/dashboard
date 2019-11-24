@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<title> dashboard </title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="gvnVersion.js"></script>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #DCD9D4; 
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%), radial-gradient(at 50% 0%, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.50) 50%); 
+  background-blend-mode: soft-light,screen;
+}
+.row {
+  /*display: table-row;*/
+  display: grid    /* from https://css-tricks.com/left-and-right/  Grid example */
+}
+.column {
+  /*display: table-cell;*/
+}
+.left {
+  width: 34%;
+  grid-column: 1;
+}
+.right {
+  width: 66%;
+  grid-column: 2;
+}
+.mainTable {
+  float: right;
+}
+.details {
+  position: relative;
+  top: 8%;
+  text-align: left
+}
+tr.project {
+  cursor: zoom-in;
+}
+th {
+    font-size: 24pt;
+    color: #4c7ece;
+}
+.title {
+    font-size: 24pt;
+    font-weight: bold;
+    color: #4c7ece;
+}
+.userstatus {
+  font-style: italic
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+
+<body>
+<div id="app">
+<span class="title"> my dashboard </span>  <span class="userstatus"> {{ userstatus }} </span>
+<hr>
+<div class="row">
+ <div class="column left">
+   <table class="mainTable">
+     <tr v-for="(v, k) in vdocs" v-on:click="showDetails(k)" class="project">
+       <td> <span v-html="v.statusHTML"></span> </td> <td> {{ k }} </td>
+     </tr>
+    </table>
+ </div>
+ <div class="column right" id="details">
+   <span class="details" v-html="alldetails"></span>
+ </div>
+</div>
+<hr>
+
+<h5> 
+{{gvn_version_str}} @ {{gvn_date}}
+</h5>
+</div>
+
+<script>
+
+  var G = {
+    desc: { },     // place to store project descriptions
+    detailsMD: { }     // project details markdown
+  };
+
+  var icons = {
+    green:    'assets/ok.png',
+    yellow:   'assets/error.png',
+    red:      'assets/close-window.png',
+    todo:     'assets/under-construction.png',
+    working:  'assets/in-progress.png',
+    sleeping: 'assets/sleeping.png'
+  };
+
+  function mainTable (alldocs) {
+    v2 = {}
+    alldocs.forEach((doc) => {
+      v2[ doc.name ] = {
+        status: doc.status,
+        statusHTML: `<img src="${icons[ doc.status ]}" alt="${ doc.status }">`,
+        description: doc.description
+        } ;
+      console.log(doc.name);
+      G['desc'][doc.name] = doc.description; 
+      G['detailsMD'][doc.name] = doc.detailsMD; 
+    });
+    app.vdocs = v2;  // vue can't see adding properties individually; this sets all at once
+  }
+
+  function showDetails(p) {
+    console.log(`showDetails ${p}`);
+    //let desc = ('desc' in G[p]) ? G[p]['desc'] : "";
+    let desc = G['desc'][p];
+    let detailsMD = G['detailsMD'][p];
+    app.alldetails = `${desc} <br> <br> ${detailsMD}`;
+  }
+
+
+  //////////////////
+  // main
+
+  // init Vue
+  var app = new Vue( {
+    el: "#app",
+    data: {
+      vdocs: {},
+      alldetails: "none",
+      userstatus: "public read-only",
+      gvn_version_str: gvn_version_str,       // n.b. script is *not* async defer; use script onload?
+      gvn_date: gvn_date
+    }
+  });
+
+  const GURL = 'https://api.github.com'
+  const GOptions = { headers: { 'User-Agent': 'gi' } }
+  const dbname = 'dashboard.json'
+
+  const getDashboard = async (user) => {
+    const resp = await fetch(`${GURL}/users/${user}/gists`, GOptions)
+    const gistsList = await resp.json()
+    //gistsList.forEach(g => Object.keys(g.files).forEach(k=>console.log(k)) )
+    const dashboardURL = gistsList.filter(g => dbname in g.files)[0].files[dbname].raw_url
+    console.log(dashboardURL)
+    const resp2 = await fetch(dashboardURL, GOptions)
+    const gist = await resp2.json()
+    return gist
+  }
+
+  getDashboard('netrc')
+    .then(data => mainTable(data));
+</script>
+
+</body>
+
+</html>
