@@ -21,11 +21,11 @@ body {
   /*display: table-cell;*/
 }
 .left {
-  width: 34%;
+  /*width: 34%;*/
   grid-column: 1;
 }
 .right {
-  width: 66%;
+  /*width: 66%;*/
   grid-column: 2;
 }
 .mainTable {
@@ -65,14 +65,14 @@ th {
 <span class="title"> my dashboard </span>  <span class="userstatus"> {{ userstatus }} </span>
 <hr>
 <div class="row">
- <div class="column left">
+ <div class="left">
    <table class="mainTable">
      <tr v-for="(v, k) in vdocs" v-on:click="showDetails(k)" class="project">
-       <td> <span v-html="v.statusHTML"></span> </td> <td> {{ k }} </td>
+       <td> <span v-html="v.statusHTML"></span> </td> <td> {{ k }} </td> <td> <span v-html="v.linkHTML"></span> <span v-html="v.repoHTML"></span> <span v-html="v.boardHTML"></span> <span v-html="v.nolinksStr"></span> </td>
      </tr>
     </table>
  </div>
- <div class="column right" id="details">
+ <div class="right" id="details">
    <span class="details" v-html="alldetails"></span>
  </div>
 </div>
@@ -85,11 +85,6 @@ th {
 
 <script>
 
-  var G = {
-    desc: { },     // place to store project descriptions
-    detailsMD: { }     // project details markdown
-  };
-
   var icons = {
     green:    'assets/ok.png',
     yellow:   'assets/error.png',
@@ -100,26 +95,26 @@ th {
   };
 
   function mainTable (alldocs) {
-    v2 = {}
-    alldocs.forEach((doc) => {
-      v2[ doc.name ] = {
-        status: doc.status,
-        statusHTML: `<img src="${icons[ doc.status ]}" alt="${ doc.status }">`,
-        description: doc.description
-        } ;
-      console.log(doc.name);
-      G['desc'][doc.name] = doc.description; 
-      G['detailsMD'][doc.name] = doc.detailsMD; 
-    });
-    app.vdocs = v2;  // vue can't see adding properties individually; this sets all at once
+    Object.keys(alldocs).forEach( docName => { // massage data as needed
+      console.log(docName)
+      const d = alldocs[docName]
+      d['statusHTML'] = `<img src="${icons[ d.status ]}" alt="${ d.status }">`
+      let nolinksStr = '';  // comma cuz array
+      ['link','repo','board'].forEach( x => {
+        d[`${x}HTML`] = (x in d) ? `<a href=${d[x]}> ${x} </a> &nbsp` : ''
+        nolinksStr += (!(x in d)) ? `${x} ` : ''
+      })
+      d['nolinksStr'] = '' // (nolinksStr!=='') ? `<i> <small> // no ${nolinksStr} </small> </i>` : ''
+    })
+    // vue can't see adding properties individually; this sets all at once
+    app.vdocs = alldocs
   }
 
   function showDetails(p) {
-    console.log(`showDetails ${p}`);
-    //let desc = ('desc' in G[p]) ? G[p]['desc'] : "";
-    let desc = G['desc'][p];
-    let detailsMD = G['detailsMD'][p];
-    app.alldetails = `${desc} <br> <br> ${detailsMD}`;
+    console.log(`showDetails ${p}`)
+    let desc = app.vdocs[p]['description']
+    let detailsMD = app.vdocs[p]['detailsMD']
+    app.alldetails = `${desc} <br> <br> ${detailsMD}`
   }
 
 
